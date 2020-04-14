@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colourMaterialIndex: 2
   species: 4
-  matTest: {fileID: 2100000, guid: 2c423ba3ec69b4461a99ca939a93b4ac, type: 2}
+  material: {fileID: 2100000, guid: 0e27191982d3a4c009146d1cb7557207, type: 2}
   coord:
     x: 0
     y: 0
@@ -67,11 +67,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2589637962258072678}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: f892f7f7fafa34650a0281cc707ca6bf,
-        type: 3}
-      propertyPath: m_Name
-      value: Bunny 1
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f892f7f7fafa34650a0281cc707ca6bf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -157,6 +152,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 2c423ba3ec69b4461a99ca939a93b4ac, type: 2}
+    - target: {fileID: -927199367670048503, guid: f892f7f7fafa34650a0281cc707ca6bf,
+        type: 3}
+      propertyPath: m_Name
+      value: Bunny 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f892f7f7fafa34650a0281cc707ca6bf, type: 3}
 --- !u!4 &4684706620502999343 stripped
