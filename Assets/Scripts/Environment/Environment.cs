@@ -359,7 +359,7 @@ public class Environment : MonoBehaviour {
                 spawnCoords.RemoveAt (spawnCoordIndex);
 
                 var entity = Instantiate (pop.prefab);
-                entity.Init (coord);
+                entity.Init (coord, Age.Adult);
 
                 speciesMaps[entity.species].Add (entity, coord);
             }

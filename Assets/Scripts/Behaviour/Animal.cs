@@ -53,8 +53,8 @@ public class Animal : LivingEntity {
     const float sqrtTwo = 1.4142f;
     const float oneOverSqrtTwo = 1 / sqrtTwo;
 
-    public override void Init (Coord coord) {
-        base.Init (coord);
+    public override void Init (Coord coord, Age age) {
+        base.Init (coord, age);
         moveFromCoord = coord;
         genes = Genes.RandomGenes (1);
 

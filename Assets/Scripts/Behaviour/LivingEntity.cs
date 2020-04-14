@@ -15,7 +15,11 @@ public class LivingEntity : MonoBehaviour {
 
     protected bool dead;
 
-    public virtual void Init (Coord coord) {
+    // override these for each species
+    protected float babySize = 0.1F;
+    protected float growthRate = 0.1F;
+
+    public virtual void Init (Coord coord, Age age) {
         this.coord = coord;
         transform.position = Environment.tileCentres[coord.x, coord.y];
 
@@ -33,6 +37,7 @@ public class LivingEntity : MonoBehaviour {
     protected virtual void Die (CauseOfDeath cause) {
         if (!dead) {
             dead = true;
+            Debug.Log(species.ToString() + " died, " + cause.ToString());
             Environment.RegisterDeath (this);
             Destroy (gameObject);
         }
