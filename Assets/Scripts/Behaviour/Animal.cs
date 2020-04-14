@@ -90,6 +90,12 @@ public class Animal : LivingEntity {
         }
     }
 
+    protected virtual void setGenes(Genes newGenes) {
+        genes = newGenes;
+        material.color = (genes.isMale) ? maleColour : femaleColour;
+
+    }
+
     // Animals choose their next action after each movement step (1 tile),
     // or, when not moving (e.g interacting with food etc), at a fixed time interval
     protected virtual void ChooseNextAction () {
