@@ -125,6 +125,14 @@ public class Environment : MonoBehaviour {
 
         return null;
     }
+    public static LivingEntity[] FindAllEntityOfSpecies (Coord coord, Animal self, Species species, System.Func<LivingEntity, LivingEntity, int> movepenalty) {
+        var entities = new List<LivingEntity> ();
+
+        Map speciesMap = speciesMaps[species];
+        entities.AddRange (speciesMap.GetEntities (coord, Animal.maxViewDistance));
+
+        return entities.ToArray();
+    }
 
     // Return list of animals of the same species, with the opposite gender, who are also searching for a mate
     public static List<Animal> SensePotentialMates (Coord coord, Animal self) {
