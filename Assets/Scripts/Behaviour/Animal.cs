@@ -20,8 +20,8 @@ public class Animal : LivingEntity {
     float timeToDeathByHunger = 100;
     float timeToDeathByThirst = 100;
 
-    float drinkDuration = 6;
-    float eatDuration = 10;
+    float drinkDuration = 3;
+    float eatDuration = 2;
 
     float criticalPercent = 0.7f;
 
@@ -118,7 +118,7 @@ public class Animal : LivingEntity {
     }
 
     protected virtual void FindFood () {
-        LivingEntity foodSource = Environment.SenseFood (coord, this, FoodPreferencePenalty);
+        LivingEntity foodSource = Environment.FindEntityOfSpecies (coord, this, diet, FoodPreferencePenalty);
         if (foodSource) {
             currentAction = CreatureAction.GoingToFood;
             foodTarget = foodSource;

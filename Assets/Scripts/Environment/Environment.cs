@@ -84,7 +84,6 @@ public class Environment : MonoBehaviour {
 
     public static LivingEntity SenseFood (Coord coord, Animal self, System.Func<LivingEntity, LivingEntity, int> foodPreference) {
         var foodSources = new List<LivingEntity> ();
-
         List<Species> prey = preyBySpecies[self.species];
         for (int i = 0; i < prey.Count; i++) {
 
@@ -101,6 +100,26 @@ public class Environment : MonoBehaviour {
             Coord targetCoord = foodSources[i].coord;
             if (EnvironmentUtility.TileIsVisibile (coord.x, coord.y, targetCoord.x, targetCoord.y)) {
                 return foodSources[i];
+            }
+        }
+
+        return null;
+    }
+
+    public static LivingEntity FindEntityOfSpecies (Coord coord, Animal self, Species species, System.Func<LivingEntity, LivingEntity, int> movepenalty) {
+        var entities = new List<LivingEntity> ();
+
+        Map speciesMap = speciesMaps[species];
+        entities.AddRange (speciesMap.GetEntities (coord, Animal.maxViewDistance));
+
+        // Sort food sources based on preference function
+        entities.Sort ((a, b) => movepenalty (self, a).CompareTo (movepenalty (self, b)));
+
+        // Return first visible food source
+        for (int i = 0; i < entities.Count; i++) {
+            Coord targetCoord = entities[i].coord;
+            if (EnvironmentUtility.TileIsVisibile (coord.x, coord.y, targetCoord.x, targetCoord.y)) {
+                return entities[i];
             }
         }
 
