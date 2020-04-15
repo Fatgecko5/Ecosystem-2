@@ -17,8 +17,8 @@ public class Animal : LivingEntity {
     // Settings:
     float timeBetweenActionChoices = 1;
     float moveSpeed = 1.5f;
-    float timeToDeathByHunger = 200;
-    float timeToDeathByThirst = 200;
+    float timeToDeathByHunger = 100;
+    float timeToDeathByThirst = 100;
 
     float drinkDuration = 6;
     float eatDuration = 10;
@@ -54,16 +54,14 @@ public class Animal : LivingEntity {
     const float oneOverSqrtTwo = 1 / sqrtTwo;
 
     public override void Init (Coord coord, Age age) {
+        if (genes == null) {
+            Genes genes = Genes.RandomGenes();
+            setGenes(genes);
+        }
         base.Init (coord, age);
         moveFromCoord = coord;
-        genes = Genes.RandomGenes (1);
-
-        material.color = (genes.isMale) ? maleColour : femaleColour;
-
         ChooseNextAction ();
     }
-
-
 
     protected virtual void Update () {
 
@@ -93,6 +91,8 @@ public class Animal : LivingEntity {
     protected virtual void setGenes(Genes newGenes) {
         genes = newGenes;
         material.color = (genes.isMale) ? maleColour : femaleColour;
+        moveSpeed = genes.speed;
+        adultSize = genes.size;
 
     }
 
@@ -205,7 +205,7 @@ public class Animal : LivingEntity {
         if (currentAction == CreatureAction.Eating) {
             if (foodTarget && hunger > 0) {
                 float eatAmount = Mathf.Min (hunger, Time.deltaTime * 1 / eatDuration);
-                eatAmount = ((Plant) foodTarget).Consume (eatAmount);
+                eatAmount = ((EdibleEntity) foodTarget).Consume (eatAmount);
                 hunger -= eatAmount;
             }
         } else if (currentAction == CreatureAction.Drinking) {
@@ -231,6 +231,28 @@ public class Animal : LivingEntity {
             moveTime = 0;
             ChooseNextAction ();
         }
+    }
+
+    new void Die(CauseOfDeath cause) {
+        if (!dead) {
+            dead = true;
+            Debug.Log(species.ToString() + " died, " + cause.ToString());
+            Environment.RegisterDeath(this);
+            
+            if (animatingMovement) {
+                animatingMovement = false;
+                transform.position = moveTargetPos;
+                coord = moveTargetCoord;
+            }
+            float rotx = transform.eulerAngles.x;
+            float roty = transform.eulerAngles.y;
+            transform.eulerAngles = new Vector3(rotx,roty,90);
+
+            var ded = gameObject.AddComponent(typeof(DeadAnimal)) as DeadAnimal;
+            ded.Init(this);
+            DestroyImmediate(this);
+        }
+    
     }
 
     void OnDrawGizmosSelected () {
