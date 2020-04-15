@@ -130,6 +130,7 @@ public class Environment : MonoBehaviour {
 
         Map speciesMap = speciesMaps[species];
         entities.AddRange (speciesMap.GetEntities (coord, Animal.maxViewDistance));
+        entities.Sort ((a, b) => movepenalty (self, a).CompareTo (movepenalty (self, b)));
 
         return entities.ToArray();
     }
